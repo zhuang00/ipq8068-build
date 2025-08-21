@@ -23,6 +23,8 @@ jobs:
         run: |
           git clone https://github.com/adron-s/uboot-ipq806x.git
           cd uboot-ipq806x
+          ls -l   # 检查 Makefile 是否存在
+
 
       - name: Build U-Boot
         run: |
