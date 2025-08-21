@@ -25,7 +25,6 @@ jobs:
 
       - name: Build U-Boot
         run: |
-          cd uboot-ipq806x
           make -j$(nproc)
 
       - name: Upload all build artifacts
