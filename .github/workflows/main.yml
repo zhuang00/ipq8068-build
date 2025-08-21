@@ -1,4 +1,4 @@
-name: Build U-Boot IPQ806x
+name: Build U-Boot IPQ806x (Full Artifacts)
 
 on:
   push:
@@ -9,16 +9,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # 推荐使用最新版本
 
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libncurses5-dev u-boot-tools
 
-      - name: Clone openwrt-sdk-ipq806x
+      - name: Clone OpenWrt SDK
         run: |
           git clone https://github.com/gl-inet/openwrt-sdk-ipq806x.git sdk
 
@@ -30,10 +31,13 @@ jobs:
         run: |
           make -j$(nproc)
 
-      - name: Upload ALL build artifacts
-        uses: actions/upload-artifact@v3
+      - name: Upload all build artifacts
+        uses: actions/upload-artifact@v4
         with:
-          name: uboot-ipq806x-full-build
+          name: full-build
           path: |
-            ./**/*
-          retention-days: 7
+            ./**/*         # 上传整个目录下的所有文件
+          retention-days: 7  # 可选，设置保留时间（1–90 天）
+          compression-level: 0  # 关闭压缩，加快上传速度
+
+      # 可根据需要继续添加发布到 Release 的步骤
